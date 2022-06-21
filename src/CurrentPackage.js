@@ -1,49 +1,25 @@
-import { Canvas, useThree } from '@react-three/fiber';
-import { Package } from './Package';
-import { useState, useEffect } from 'react';
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-// import * as THREE from "three";
-//import 
-
-const CameraController = () => {
-    const { camera, gl } = useThree();
-    useEffect(
-      () => {
-        const controls = new OrbitControls(camera, gl.domElement);
-  
-        controls.minDistance = 3;
-        controls.maxDistance = 20;
-        return () => {
-          controls.dispose();
-        };
-      },
-      [camera, gl]
-    );
-    return null;
-};
+import { useEffect, useState } from 'react';
+import { SceneCurrentPackage } from './SceneCurrentPackage';
+import * as THREE from 'three';
 
 export function CurrentPackage() {
+    
+    let [currentObj, setCurrentObj] = useState([]);
   
-    const [mousePosition, setMousePosition] = useState({
-        left: 0,
-        top: 0
-    })
-  
-    function handleMouseMove(ev) { 
-        setMousePosition({left: ev.pageX, top: ev.pageY}); 
-        console.log({left: ev.pageX, top: ev.pageY});
+    const handleClick = () =>  {
+        const geometry = new THREE.BoxGeometry(1, 1, 1)
+        const material = new THREE.MeshBasicMaterial({ color: 0xffff00 })
+        const cube = new THREE.Mesh(geometry, material)
+
+        const edgeGeometry = new THREE.EdgesGeometry( geometry ); // or WireframeGeometry
+        const mat = new THREE.LineBasicMaterial( { color: 0x000000, linewidth: 4 } );
+        const edges = new THREE.LineSegments( edgeGeometry, mat );
+        setCurrentObj([cube, edges])
     }
-  
+
     return (<>
-        <Canvas
-            onMouseMove={handleMouseMove}
-            camera={{ fov: 20, near: 0.1, far: 1000, position: [0, 0, 30] }}
-        >
-            <CameraController />
-            <ambientLight />
-            <pointLight intensity={1} position={[5, 10, 50]} />
-            <Package position={[0, 0, 0]} />
-        </Canvas>
-    </>
+            <SceneCurrentPackage height={600} width={500} objects={currentObj} bin={{x: 10, y: 5, z: 8}}/>
+            <button onClick={handleClick}>Klick mich!</button>
+        </>
     );
 }

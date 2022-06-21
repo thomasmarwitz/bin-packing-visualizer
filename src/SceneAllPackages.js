@@ -17,20 +17,26 @@ export function Scene(props) {
     
         const scene = new THREE.Scene({background: 0xffffff})
         const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000)
+        camera.position.set(props.bin.x * 1.25, 0, 0)
         const renderer = new THREE.WebGLRenderer({ antialias: true })
-        const geometry = new THREE.BoxGeometry(1, 1, 1)
-        const material = new THREE.MeshBasicMaterial({ color: 0xff00ff })
+        const geometry = new THREE.BoxGeometry(props.bin.x, props.bin.y, props.bin.z)
+        const material = new THREE.MeshBasicMaterial({ color: 0x000000, opacity: 0, transparent: true })
         const cube = new THREE.Mesh(geometry, material)
+
+        // remove later
+        const axesHelper = new THREE.AxesHelper( 5 );
+        scene.add( axesHelper );
+        // The X axis is red. The Y axis is green. The Z axis is blue.
 
         var edgeGeometry = new THREE.EdgesGeometry( geometry ); // or WireframeGeometry
         var mat = new THREE.LineBasicMaterial( { color: 0x000000, linewidth: 4 } );
         var edges = new THREE.LineSegments( edgeGeometry, mat );
         scene.add(edges);
         
-        //scene.add( line );
     
-        camera.position.z = 4
+        //camera.position.z = 4
         scene.add(cube)
+        cube.position.set(-props.bin.x * 0.5, -props.bin.y * 0.5, -props.bin.z * 0.5);
         renderer.setClearColor( 0xffffff, 0);
         renderer.setSize(width, height)
     
@@ -101,7 +107,7 @@ export function Scene(props) {
 
         for (let obj of props.objects) {
             controls.scene.add(obj);
-            obj.position.set(1, 2, 0);
+            obj.position.set(0, 0, 0);
         }
     }
        
