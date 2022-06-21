@@ -1,10 +1,12 @@
-import { BinPacking } from "./view/pages/BinPacking";
-
+import { Link } from "react-router-dom";
 
 function App() {
 
-    return (
-        <BinPacking />
+    return (<>
+            <Link to="/bin-input">Bin Input</Link>
+            <br />
+            <Link to="/bin-packing">Bin Packing</Link>
+        </>
     )
 }
 

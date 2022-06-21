@@ -16,7 +16,6 @@ export function Scene(props) {
             if (controls.scene?.children) {
                 for( var i = controls.scene.children.length - 1; i >= 2; i--) { 
                     let obj = controls.scene.children[i];
-                    //console.log(obj);
                     controls.scene.remove(obj);
                 }
             }
@@ -114,11 +113,7 @@ export function Scene(props) {
         return () => {
             stop()
             window.removeEventListener('resize', handleResize)
-            mount.current.removeChild(renderer.domElement)
-    
-            scene.remove(cube)
-            geometry.dispose()
-            material.dispose()
+            mount.current?.removeChild(renderer.domElement) // allows for navigation away from page
         }
     }, [])
     

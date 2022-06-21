@@ -89,7 +89,7 @@ export function SceneCurrentPackage(props) {
         return () => {
             stop()
             window.removeEventListener('resize', handleResize)
-            mount.current.removeChild(renderer.domElement)
+            mount.current?.removeChild(renderer.domElement)
     
         }
     }, [])

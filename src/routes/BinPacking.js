@@ -1,10 +1,10 @@
 import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
-import { selectCurrentPackage } from "../../store/packagingSlice/packagingSlice";
-import { Item } from "../../helper/styleHelper";
-import { CurrentPackage } from "../CurrentPackage/CurrentPackage";
-import { AllPackages } from "../AllPackages/AllPackages";
-import { Controls } from "../Controls/Controls";
+import { selectCurrentPackage } from "../store/packagingSlice/packagingSlice";
+import { Item } from "../helper/styleHelper";
+import { CurrentPackage } from "../view/CurrentPackage/CurrentPackage";
+import { AllPackages } from "../view/AllPackages/AllPackages";
+import { Controls } from "../view/Controls/Controls";
 
 
 export function BinPacking() {
