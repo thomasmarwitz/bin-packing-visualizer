@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { generateBox } from "../../../helper/boxHelper";
-import { getColor } from "../../../helper/colors";
+import { generateBox } from "../../helper/boxHelper";
+import { getColor } from "../../helper/colors";
 
 
 const packages = [

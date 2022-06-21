@@ -1,7 +1,7 @@
 import { Button, Box, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { Item } from "../../helper/styleHelper";
-import { selectAmountLeftBoxes, selectAmountPlacedBoxes, selectHasNext, selectHasPrev, setNext, setPrev } from "../store/packaging/packagingSlice";
+import { selectAmountLeftBoxes, selectAmountPlacedBoxes, selectHasNext, selectHasPrev, setNext, setPrev } from "../../store/packagingSlice/packagingSlice";
 
 export function Controls() {
 

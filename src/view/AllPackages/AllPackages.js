@@ -3,7 +3,7 @@ import {Scene} from "./SceneAllPackages";
 import * as THREE from 'three';
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { selectPlacedPackages } from "../store/packaging/packagingSlice";
+import { selectPlacedPackages } from "../../store/packagingSlice/packagingSlice";
 
 export function AllPackages() {
 
