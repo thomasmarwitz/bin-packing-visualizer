@@ -1,98 +1,57 @@
-import { FormControl, InputLabel, Select, MenuItem, TextField, Button, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { FormControl, InputLabel, Select, MenuItem, Input, Typography } from "@mui/material";
 import React from "react";
+import { DynamicForm } from "../view/DynamicForm/DynamicForm";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectRequestDataAlgorithm, selectRequestDataBinLimit, selectRequestDataBins, setRequestDataAlgorithm, setRequestDataBinLimit, setRequestDataBins } from "../store/apiSlice/apiSlice";
 
 export function BinInput() {
+    const algorithm = useSelector(selectRequestDataAlgorithm);
+    const binLimit = useSelector(selectRequestDataBinLimit);
+    const bins = useSelector(selectRequestDataBins);
+    
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const [algoritm, setAlgorithm] = React.useState('LARGEST_AREA_FIT_FIRST');
-
-    const formBoxLine = (id) => ([
-        <TextField id={`x-${id}`} key={`x-${id}`} label="x" variant="outlined"/>,
-        <TextField id={`y-${id}`} key={`y-${id}`} label="y" variant="outlined"/>,
-        <TextField id={`z-${id}`} key={`z-${id}`} label="z" variant="outlined"/>,
-        <TextField id={`weight-${id}`} key={`weight-${id}`} label="Weight" variant="outlined"/>,
-        <TextField id={`count-${id}`} key={`count-${id}`} label="Count" variant="outlined"/>,
-    ]);
-
-    const [formState, setFormState] = React.useState(formBoxLine(0));
-
-    console.log(formState);
-
-    const handleChange = (event) => {
-        setAlgorithm(event.target.value);
-    };
-
-    const handleSubmit = () => {
-        let boxes = [];
-        let idCounter = 0;
-        for (let i = 0; i < Math.floor(formState.length / 5); ++i) {
-            const box = {id: idCounter};
-            for (let key of ["x", "y", "z", "weight", "count"]) {
-                box[key] = parseInt(document.getElementById(`${key}-${i}`).value);
-            }
-            boxes.push(box);
-            idCounter++;
+    const handleSubmittedData = (data) => {
+        let numeralBinLimit;
+        try {
+            numeralBinLimit = parseInt(binLimit);
+        } catch (e) {
+            console.log(e);
+            alert("Bin Limit has to be a number")
+            return;
         }
-        
-        boxes = boxes.filter(obj => {
-            
-            for (let val of Object.values(obj)) {
-                if (isNaN(val)) return false;
-            }
+        dispatch(setRequestDataBinLimit(numeralBinLimit));
 
-            return true;
-        })
-        
-        // works: console.log(boxes);
-    }
-
-    const handleAddRow = () => {
-        const newId = Math.floor(formState.length / 5);
-        setFormState([...formState, ...formBoxLine(newId)]);
+        if (data.length !== 0) {
+            dispatch(setRequestDataBins(data));
+            navigate("/box-input");
+        } else {
+            alert("Please specify atleast 1 valid bin");
+        }
     }
 
     return (<>
-            <FormControl fullWidth sx={{marginBottom: "1%"}}>
-                <InputLabel id="demo-simple-select-label">Algorithm Strategy</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={algoritm}
-                    label="Algorithm Strategy"
-                    onChange={handleChange}
+        <FormControl fullWidth sx={{marginBottom: "1%"}}>
+            <InputLabel id="demo-simple-select-label">Algorithm Strategy</InputLabel>
+            <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={algorithm}
+                label="Algorithm Strategy"
+                onChange={(event) => dispatch(setRequestDataAlgorithm(event.target.value))}
                 >
-                    <MenuItem value={'LARGEST_AREA_FIT_FIRST'}>Largest Area Fit First</MenuItem>
-                    <MenuItem value={'BRUTE_FORCE'}>Brute Force</MenuItem>
-                </Select>
-            </FormControl>
-
-            <Typography>Specify Boxes</Typography>
-
-            <Box
-                component="form"
-                style={{display: "grid", gridTemplateColumns: "repeat(5, 1fr)", columnGap: "1%", rowGap: "5%"}}
-            >
-                {formState}
-                
-            </Box>
-
-            <Button 
-                variant="contained" 
-                onClick={handleAddRow}
-                sx={{marginTop: `${formState.length / 5 * 2}%`, marginRight: "1%"}}
-                >
-                Add Box Type
-            </Button> 
-
-            <Button 
-                
-                variant="contained" 
-                onClick={handleSubmit}
-                sx={{marginTop: `${formState.length / 5 * 2}%`, type: "submit"}}
-                color="success"
-                >
-                Submit
-            </Button> 
+                <MenuItem value={'LARGEST_AREA_FIT_FIRST'}>Largest Area Fit First</MenuItem>
+                <MenuItem value={'BRUTE_FORCE'}>Brute Force</MenuItem>
+            </Select>
+        </FormControl>
+        
+        <>
+            <Typography>Bin Limit:</Typography>
+            <Input value={binLimit} onChange={(event) => dispatch(setRequestDataBinLimit(event.target.value))}/>
         </>
-    )
+        
+        <DynamicForm title={"Input Bins"} handleSubmittedData={handleSubmittedData} initialState={[]}/>
+    </>);
 }

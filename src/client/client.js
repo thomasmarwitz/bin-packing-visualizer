@@ -13,7 +13,7 @@ const postAtAPI = (endpoint, data) => {
     return axios.post(baseUrl + endpoint, data, { timeout: timeoutVal }); 
 }
 
-const postBinPacking = (data) => {
+export const postBinPacking = (data) => {
     return postAtAPI(
         "/pack",
         data

@@ -5,7 +5,10 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { BinPacking } from './routes/BinPacking';
+import { BoxInput } from './routes/BoxInput';
 import { BinInput } from './routes/BinInput';
+import { PackingReqLoading } from './routes/PackingReqLoading';
+import { BoxReadingLoading } from './routes/BoxReadingLoading';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -17,6 +20,9 @@ root.render(
                 <Route path="/" element={<App />} />
                 <Route path="bin-packing" element={<BinPacking />} />
                 <Route path="bin-input" element={<BinInput />} />
+                <Route path="box-input" element={<BoxInput />} />
+                <Route path="packing-loading" element={<PackingReqLoading />} />
+                <Route path="boxes-loading" element={<BoxReadingLoading />} />
             </Routes>
             </Provider>
         </React.StrictMode>
