@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { generateBox } from "../../helper/boxHelper";
+import { generateBox, generatePackagesFromContent } from "../../helper/boxHelper";
 import { getColor } from "../../helper/colors";
 
 
@@ -75,9 +75,30 @@ const packagingSlice = createSlice({
             if (state.bins[currentBin].bin.filledUntil >= 0) state.bins[currentBin].bin.filledUntil--;
         },
         
-        setPackages(state, action) {
-            const { packages } = action.payload;
-            // build
+        setResponseData(state, action) {
+            const { data } = action.payload;
+            
+            if (!data.success) return;
+
+            state.bins = [] // clear old bin solutions
+            for (let binSolution of data.packedBins) {
+                
+                // generate packages
+                const _packages = generatePackagesFromContent(binSolution.content);
+                
+                state.bins.push({
+                    bin: {
+                        dimensions: {
+                            x: binSolution.bin.x,
+                            y: binSolution.bin.y,
+                            z: binSolution.bin.z,
+                        },
+                        filledUntil: -1,
+                    },
+                    packages: _packages,
+
+                });
+            }
 
 
         },
@@ -92,7 +113,7 @@ const packagingSlice = createSlice({
 export const {
     setNext,
     setPrev,
-    setPackages,
+    setResponseData,
     setCurrentBin
 } = packagingSlice.actions;
 

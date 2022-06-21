@@ -10,3 +10,25 @@ export function generateBox(dim, color, transparent=false) {
     const edges = new THREE.LineSegments( edgeGeometry, mat );
     return [cube, edges];
 }
+
+export function generatePackagesFromContent(content) {
+    const packages = [];
+
+    for (let _package of content) {
+        const _p = {
+            dimensions: {
+                x: _package.xEnd - _package.x, 
+                y: _package.yEnd - _package.y,
+                z: _package.zEnd - _package.z,
+            },
+            placement: {
+                x: _package.x, 
+                y: _package.y,
+                z: _package.z,
+            },
+        }
+        packages.push(_p);
+    }
+    
+    return packages
+}

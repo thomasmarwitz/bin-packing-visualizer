@@ -1,5 +1,6 @@
 import { createSlice, createAction } from "@reduxjs/toolkit";
 import { postBinPacking } from "../../client/client";
+import { setResponseData } from "../packagingSlice/packagingSlice";
 
 const initialState = {
     requestData: {
@@ -60,7 +61,10 @@ export const fetchBinData = () => {
         dispatch(fetchBinDataPending());
 
         return postBinPacking(requestData).then(
-            response => dispatch(fetchBinDataSuccess({data: response.data})),
+            response => {
+                dispatch(fetchBinDataSuccess({data: response.data}));
+                dispatch(setResponseData({data: response.data}));
+            },
             error => dispatch(fetchBinDataRejected({error: error.message})),
         );
 
