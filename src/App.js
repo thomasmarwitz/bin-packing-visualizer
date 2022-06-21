@@ -1,8 +1,8 @@
 
-import { CurrentPackage } from './CurrentPackage';
+import { CurrentPackage } from './view/CurrentPackage/CurrentPackage';
 import { Button, Box, Typography } from "@mui/material";
 import React from 'react';
-import { AllPackages } from './AllPackages';
+import { AllPackages } from './view/AllPackages/AllPackages';
 
 function Item(props) {
     const { sx, ...other } = props;
