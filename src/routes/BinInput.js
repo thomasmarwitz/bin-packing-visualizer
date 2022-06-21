@@ -43,7 +43,7 @@ export function BinInput() {
                 onChange={(event) => dispatch(setRequestDataAlgorithm(event.target.value))}
                 >
                 <MenuItem value={'LARGEST_AREA_FIT_FIRST'}>Largest Area Fit First</MenuItem>
-                <MenuItem value={'BRUTE_FORCE'}>Brute Force</MenuItem>
+                <MenuItem value={'BRUTEFORCE'}>Brute Force</MenuItem>
             </Select>
         </FormControl>
         

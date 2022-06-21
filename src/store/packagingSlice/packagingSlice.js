@@ -44,17 +44,21 @@ const packages = [
 
 const initialState = {
 
-    packages, // list of objects
+    bins: [{
+        packages, // list of objects
 
-    bin: {
-        dimensions: {
-            x: 10,
-            y: 8,
-            z: 12,    
-        },
+        bin: {
+            dimensions: {
+                x: 10,
+                y: 8,
+                z: 12,    
+            },
 
-        filledUntil: -1, // index, -1 = empty
-    }
+            filledUntil: -1, // index, -1 = empty
+        }
+    }],
+    
+    currentBin: 0
 }
 
 const packagingSlice = createSlice({
@@ -62,29 +66,45 @@ const packagingSlice = createSlice({
     initialState,
     reducers: {
         setNext(state, action) {
-            if (state.bin.filledUntil < state.packages.length -1) state.bin.filledUntil++;
+            const currentBin = state.currentBin;
+            if (state.bins[currentBin].bin.filledUntil < state.bins[currentBin].packages.length -1) state.bins[currentBin].bin.filledUntil++;
         },
 
         setPrev(state, action) {
-            if (state.bin.filledUntil >= 0) state.bin.filledUntil--;
+            const currentBin = state.currentBin;
+            if (state.bins[currentBin].bin.filledUntil >= 0) state.bins[currentBin].bin.filledUntil--;
+        },
+        
+        setPackages(state, action) {
+            const { packages } = action.payload;
+            // build
+
+
+        },
+
+        setCurrentBin(state, action) {
+            const { currentBin } = action.payload;
+            state.currentBin = currentBin;
         }
     }
 })
 
 export const {
     setNext,
-    setPrev
+    setPrev,
+    setPackages,
+    setCurrentBin
 } = packagingSlice.actions;
 
 export default packagingSlice.reducer; // main reducer
 
 // selectors
-export const selectHasNext = state => state.packaging.bin.filledUntil < state.packaging.packages.length - 1 - 1; 
+export const selectHasNext = state => state.packaging.bins[state.packaging.currentBin].bin.filledUntil < state.packaging.bins[state.packaging.currentBin].packages.length - 1 - 1; 
 
-export const selectHasPrev = state => state.packaging.bin.filledUntil >= 0;
+export const selectHasPrev = state => state.packaging.bins[state.packaging.currentBin].bin.filledUntil >= 0;
 
 export const selectCurrentPackage = state => {
-    const box = state.packaging.packages[state.packaging.bin.filledUntil + 1];
+    const box = state.packaging.bins[state.packaging.currentBin].packages[state.packaging.bins[state.packaging.currentBin].bin.filledUntil + 1];
     return generateBox(box.dimensions, getColor(box.dimensions), false);
 };
 
@@ -92,9 +112,11 @@ export const selectPlacedPackages = state => {
     const boxes = [];
     const placement = [];
     //state.packaging.bin.filledUntil
-    const maxIndex = state.packaging.bin.filledUntil + 2;
+    const currentBin = state.packaging.currentBin;
+
+    const maxIndex = state.packaging.bins[currentBin].bin.filledUntil + 2;
     for (let index = 0; index < maxIndex; ++index) {
-        const rawBox = state.packaging.packages[index];
+        const rawBox = state.packaging.bins[state.packaging.currentBin].packages[index];
         boxes.push(...generateBox(rawBox.dimensions, getColor(rawBox.dimensions), index !== maxIndex - 1));
         placement.push(rawBox.placement, rawBox.placement);
     }
@@ -104,6 +126,8 @@ export const selectPlacedPackages = state => {
     };
 }
 
-export const selectAmountPlacedBoxes = state => state.packaging.bin.filledUntil + 1 + 1; // first is alreadyd place, should we change this?
+export const selectAmountPlacedBoxes = state => state.packaging.bins[state.packaging.currentBin].bin.filledUntil + 1 + 1; // first is alreadyd place, should we change this?
 
-export const selectAmountLeftBoxes = state => state.packaging.packages.length - state.packaging.bin.filledUntil - 1 - 1;
+export const selectAmountLeftBoxes = state => state.packaging.bins[state.packaging.currentBin].packages.length - state.packaging.bins[state.packaging.currentBin].bin.filledUntil - 1 - 1;
+
+export const selectCurrentBin = state => state.packaging.currentBin;

@@ -9,7 +9,7 @@ export function AllPackages() {
 
     
     const objects = useSelector(selectPlacedPackages);
-    console.log("placed", objects);
+    //console.log("placed", objects);
     
 
     return (<>

@@ -38,7 +38,7 @@ const initialState = {
                 weight: 1,
             }
         ],
-        algorithm: "BRUTE_FORCE",
+        algorithm: "LARGEST_AREA_FIT_FIRST",
         binLimit: 1,
     },
     response: {
