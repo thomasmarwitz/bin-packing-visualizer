@@ -9,6 +9,24 @@ export function SceneCurrentPackage(props) {
     const mount = useRef(null)
     const [isAnimating, setAnimating] = useState(true)
     const controls = useRef(null)
+
+    const handleProps = (props) => {
+        if (props.objects && controls?.scene) {
+        
+            if (controls.scene?.children) {
+                for( var i = controls.scene.children.length - 1; i >= 0; i--) { 
+                    let obj = controls.scene.children[i];
+                    //console.log(obj);
+                    controls.scene.remove(obj);
+                }
+            }
+    
+            for (let obj of props.objects) {
+                controls.scene.add(obj);
+                obj.position.set(0, 0, 0);
+            }
+        }
+    }
     
     useEffect(() => {
         let width = mount.current.clientWidth;
@@ -26,7 +44,7 @@ export function SceneCurrentPackage(props) {
 
         renderer.setClearColor( 0xffffff, 0);
         renderer.setSize(width, height)
-    
+
         const renderScene = () => {
             renderer.render(scene, camera)
         }
@@ -41,13 +59,6 @@ export function SceneCurrentPackage(props) {
         }
         
         const animate = () => {
-            /*
-            cube.rotation.x += 0.01
-            cube.rotation.y += 0.01
-            edges.rotation.x += 0.01
-            edges.rotation.y += 0.01
-            */
-    
             renderScene()
             frameId = window.requestAnimationFrame(animate)
         }
@@ -70,6 +81,10 @@ export function SceneCurrentPackage(props) {
         controls.current = { start, stop }
         controls.control = new OrbitControls( camera, renderer.domElement );
         controls.scene = scene;
+
+        // handle props
+        handleProps(props);
+
         
         return () => {
             stop()
@@ -87,21 +102,7 @@ export function SceneCurrentPackage(props) {
     }
     }, [isAnimating])
 
-    if (props.objects) {
-        
-        if (controls.scene?.children) {
-            for( var i = controls.scene.children.length - 1; i >= 0; i--) { 
-                let obj = controls.scene.children[i];
-                console.log(obj);
-                controls.scene.remove(obj);
-            }
-        }
-
-        for (let obj of props.objects) {
-            controls.scene.add(obj);
-            obj.position.set(0, 0, 0);
-        }
-    }
+    handleProps(props);
        
     return <div className="vis" ref={mount} />
 }

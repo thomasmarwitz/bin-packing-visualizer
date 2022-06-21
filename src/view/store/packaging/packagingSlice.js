@@ -51,9 +51,7 @@ const initialState = {
             z: 12,    
         },
 
-        state: {
-            filledUntil: -1, // index, -1 = empty
-        }
+        filledUntil: -1, // index, -1 = empty
     }
 }
 
@@ -62,11 +60,11 @@ const packagingSlice = createSlice({
     initialState,
     reducers: {
         setNext(state, action) {
-            if (state.bin.state.filledUntil < state.packages.length -1) state.bin.state.filledUntil++;
+            if (state.bin.filledUntil < state.packages.length -1) state.bin.filledUntil++;
         },
 
         setPrev(state, action) {
-            if (state.bin.state.filledUntil >= 0) state.bin.state.filledUntil--;
+            if (state.bin.filledUntil >= 0) state.bin.filledUntil--;
         }
     }
 })
@@ -79,10 +77,14 @@ export const {
 export default packagingSlice.reducer; // main reducer
 
 // selectors
-export const selectHasNext = state => state.bin.state.filledUntil < state.packages.length -1; 
+export const selectHasNext = state => state.packaging.bin.filledUntil < state.packaging.packages.length - 1 - 1; 
 
-export const selectHasPrev = state => state.bin.state.filledUntil >= 0;
+export const selectHasPrev = state => state.packaging.bin.filledUntil >= 0;
 
 export const selectCurrentPackage = state => {
-    return state.packages[state.bin.state.filledUntil + 1]
+    return state.packaging.packages[state.packaging.bin.filledUntil + 1]
 };
+
+export const selectAmountPlacedBoxes = state => state.packaging.bin.filledUntil + 1 + 1; // first is alreadyd place, should we change this?
+
+export const selectAmountLeftBoxes = state => state.packaging.packages.length - state.packaging.bin.filledUntil - 1 - 1;

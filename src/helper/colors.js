@@ -31,9 +31,10 @@ function indexOfDim(dim) {
 
 export function getColor(dim) {
     let pos = indexOfDim(dim);
-    if (dim === -1) {
+    if (pos === -1) {
         dimensions.push(dim);
         pos = dimensions.length - 1; // new dim is last
     } 
+    console.log(pos);
     return colors[pos];
 }
