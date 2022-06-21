@@ -18,7 +18,7 @@ export function CurrentPackage() {
     }
 
     return (<>
-            <SceneCurrentPackage height={600} width={500} objects={currentObj} bin={{x: 10, y: 5, z: 8}}/>
+            <SceneCurrentPackage height={600} width={600} objects={currentObj} bin={{x: 10, y: 5, z: 8}}/>
             <button onClick={handleClick}>Klick mich!</button>
         </>
     );

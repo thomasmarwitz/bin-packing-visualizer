@@ -11,8 +11,8 @@ export function SceneCurrentPackage(props) {
     const controls = useRef(null)
     
     useEffect(() => {
-        let width =  props.width;
-        let height = props.height;
+        let width = mount.current.clientWidth;
+        let height = mount.current.clientHeight || props.height;
         let frameId;
     
         const scene = new THREE.Scene({background: 0xffffff})

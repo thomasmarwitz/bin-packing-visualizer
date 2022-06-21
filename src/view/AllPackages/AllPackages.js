@@ -24,7 +24,7 @@ export function AllPackages() {
     
 
     return (<>
-        <Scene height={600} width={500} objects={objects} bin={{x: 10, y: 5, z: 8}}/>
+        <Scene height={600} width={600} objects={objects} bin={{x: 10, y: 5, z: 8}} style={{minWidth: "100%", minHeight: "100%"}}/>
         <button onClick={handleClick}>Klick mich</button>
         </>
     );
