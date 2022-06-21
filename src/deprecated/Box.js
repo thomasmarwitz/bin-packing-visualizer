@@ -1,5 +1,6 @@
 import { useFrame } from '@react-three/fiber';
 import { useRef, useState } from 'react'
+import { WireframeGeometry } from 'three';
 
 export function Box(props) {
     // This reference will give us direct access to the mesh
@@ -20,6 +21,7 @@ export function Box(props) {
         onPointerOut={() => setHover(false)}>
         <boxGeometry args={[1, 2, 3]} />
         <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
+        
       </mesh>
     )
   }

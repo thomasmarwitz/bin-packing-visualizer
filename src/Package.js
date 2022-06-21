@@ -5,9 +5,6 @@ export function Package(props) {
     // This reference will give us direct access to the mesh
     const mesh = useRef()
 
-    //useFrame(() => (mesh.current.rotation.y += 0.01))
-    //useFrame(() => (mesh.current.rotation.x += 0.01))
-
     return (
         <mesh
             {...props}

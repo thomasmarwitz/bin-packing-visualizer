@@ -1,8 +1,8 @@
-import { Scene } from './Scene';
+
 import { CurrentPackage } from './CurrentPackage';
 import { Button, Box, Typography } from "@mui/material";
 import React from 'react';
-import Cursor from './Cursor';
+import { AllPackages } from './AllPackages';
 
 function Item(props) {
     const { sx, ...other } = props;
@@ -34,7 +34,7 @@ function App() {
     return (<>
         <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
             <Item style={{ height: "70vh" }}><CurrentPackage /></Item>
-            <Item><Scene /></Item>
+            <Item><AllPackages /></Item>
         </Box>
         
         <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
@@ -59,8 +59,6 @@ function App() {
                 <Typography>Available Space: {availableSpace}</Typography>
             </Item>
         </Box>
-
-        <Cursor />
         
     </>
   );
