@@ -10,6 +10,31 @@ export function Scene(props) {
     const [isAnimating, setAnimating] = useState(true)
     const controls = useRef(null)
     
+    const handleProps = (objects) => {
+        if (objects && controls.scene) {
+
+            if (controls.scene?.children) {
+                for( var i = controls.scene.children.length - 1; i >= 2; i--) { 
+                    let obj = controls.scene.children[i];
+                    //console.log(obj);
+                    controls.scene.remove(obj);
+                }
+            }
+
+            for (let index = 0; index < objects.boxes.length; ++index) {
+                const box = objects.boxes[index];
+                //console.log("box", box)
+                const placement = objects.placement[index]
+                controls.scene.add(box);
+                box.position.set(
+                    placement.x,
+                    placement.y,
+                    placement.z
+                );
+            }
+        }
+    }
+
     useEffect(() => {
         let width = mount.current.clientWidth;
         let height = mount.current.clientHeight || props.height;
@@ -84,6 +109,8 @@ export function Scene(props) {
         controls.control = new OrbitControls( camera, renderer.domElement );
         controls.scene = scene;
         
+        handleProps(props.objects);
+
         return () => {
             stop()
             window.removeEventListener('resize', handleResize)
@@ -103,13 +130,7 @@ export function Scene(props) {
     }
     }, [isAnimating])
 
-    if (props.objects) {
-
-        for (let obj of props.objects) {
-            controls.scene.add(obj);
-            obj.position.set(0, 0, 0);
-        }
-    }
+    handleProps(props.objects);
        
     return <div className="vis" ref={mount} />
 }

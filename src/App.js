@@ -12,9 +12,7 @@ import { getColor } from './helper/colors';
 
 function App() {
 
-    const currentPackage = useSelector(selectCurrentPackage);
-    console.log(getColor(currentPackage.dimensions));
-    const box = generateBox(currentPackage.dimensions, getColor(currentPackage.dimensions), false);
+    const box = useSelector(selectCurrentPackage);
     
 
     return (<>

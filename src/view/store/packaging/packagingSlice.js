@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { generateBox } from "../../../helper/boxHelper";
+import { getColor } from "../../../helper/colors";
 
 
 const packages = [
@@ -82,8 +84,25 @@ export const selectHasNext = state => state.packaging.bin.filledUntil < state.pa
 export const selectHasPrev = state => state.packaging.bin.filledUntil >= 0;
 
 export const selectCurrentPackage = state => {
-    return state.packaging.packages[state.packaging.bin.filledUntil + 1]
+    const box = state.packaging.packages[state.packaging.bin.filledUntil + 1];
+    return generateBox(box.dimensions, getColor(box.dimensions), false);
 };
+
+export const selectPlacedPackages = state => {
+    const boxes = [];
+    const placement = [];
+    //state.packaging.bin.filledUntil
+    const maxIndex = state.packaging.bin.filledUntil + 2;
+    for (let index = 0; index < maxIndex; ++index) {
+        const rawBox = state.packaging.packages[index];
+        boxes.push(...generateBox(rawBox.dimensions, getColor(rawBox.dimensions), index !== maxIndex - 1));
+        placement.push(rawBox.placement, rawBox.placement);
+    }
+    return {
+        boxes,
+        placement,
+    };
+}
 
 export const selectAmountPlacedBoxes = state => state.packaging.bin.filledUntil + 1 + 1; // first is alreadyd place, should we change this?
 

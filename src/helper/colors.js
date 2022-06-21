@@ -35,6 +35,5 @@ export function getColor(dim) {
         dimensions.push(dim);
         pos = dimensions.length - 1; // new dim is last
     } 
-    console.log(pos);
     return colors[pos];
 }

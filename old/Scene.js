@@ -11,7 +11,7 @@ class Scene extends Component {
   }
 
   componentDidMount() {
-    console.log("Hello")
+
     const width = this.mount.clientWidth
     const height = this.mount.clientHeight
 
