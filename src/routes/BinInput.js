@@ -11,7 +11,7 @@ export function BinInput() {
         <TextField id={`y-${id}`} key={`y-${id}`} label="y" variant="outlined"/>,
         <TextField id={`z-${id}`} key={`z-${id}`} label="z" variant="outlined"/>,
         <TextField id={`weight-${id}`} key={`weight-${id}`} label="Weight" variant="outlined"/>,
-        <TextField id={`amount-${id}`} key={`amount-${id}`} label="Amount" variant="outlined"/>,
+        <TextField id={`count-${id}`} key={`count-${id}`} label="Count" variant="outlined"/>,
     ]);
 
     const [formState, setFormState] = React.useState(formBoxLine(0));
@@ -22,16 +22,28 @@ export function BinInput() {
         setAlgorithm(event.target.value);
     };
 
-    const handleSubmit = (event) => {
-        const boxes = [];
+    const handleSubmit = () => {
+        let boxes = [];
+        let idCounter = 0;
         for (let i = 0; i < Math.floor(formState.length / 5); ++i) {
-            const box = {};
-            for (let key of ["x", "y", "z", "weight", "amount"]) {
-                box[key] = document.getElementById(`${key}-${i}`).value
+            const box = {id: idCounter};
+            for (let key of ["x", "y", "z", "weight", "count"]) {
+                box[key] = parseInt(document.getElementById(`${key}-${i}`).value);
             }
             boxes.push(box);
+            idCounter++;
         }
-        console.log(boxes);
+        
+        boxes = boxes.filter(obj => {
+            
+            for (let val of Object.values(obj)) {
+                if (isNaN(val)) return false;
+            }
+
+            return true;
+        })
+        
+        // works: console.log(boxes);
     }
 
     const handleAddRow = () => {
