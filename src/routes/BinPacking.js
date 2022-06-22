@@ -13,7 +13,7 @@ export function BinPacking() {
 
     return (<>
         <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-            <Item style={{ height: "70vh" }}><CurrentPackage currentPackage={box}/></Item>
+            <Item><CurrentPackage currentPackage={box}/></Item>
             <Item><AllPackages /></Item>
         </Box>
         

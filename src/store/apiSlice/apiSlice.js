@@ -19,7 +19,7 @@ const initialState = {
                 x: 50,
                 y: 30,
                 z: 70,
-                count: 1,
+                count: 100,
                 weight: 1,
             },
             {
@@ -27,7 +27,7 @@ const initialState = {
                 x: 50,
                 y: 60,
                 z: 10,
-                count: 1,
+                count: 100,
                 weight: 1,
             },
             {
@@ -35,7 +35,7 @@ const initialState = {
                 x: 10,
                 y: 70,
                 z: 100,
-                count: 1,
+                count: 100,
                 weight: 1,
             }
         ],
