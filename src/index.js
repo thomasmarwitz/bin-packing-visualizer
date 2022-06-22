@@ -9,6 +9,7 @@ import { BoxInput } from './routes/BoxInput';
 import { BinInput } from './routes/BinInput';
 import { PackingReqLoading } from './routes/PackingReqLoading';
 import { BoxReadingLoading } from './routes/BoxReadingLoading';
+import { SharedData } from './routes/SharedData';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -23,6 +24,7 @@ root.render(
                 <Route path="box-input" element={<BoxInput />} />
                 <Route path="packing-loading" element={<PackingReqLoading />} />
                 <Route path="boxes-loading" element={<BoxReadingLoading />} />
+                <Route path="shared" element={<SharedData />} />
             </Routes>
             </Provider>
         </React.StrictMode>

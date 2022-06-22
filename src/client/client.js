@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = "http://localhost:8080"
+export const baseUrl = "http://localhost:8080"
 
 const timeoutVal = 5 * 60 * 1000 // 5 minutes
 
