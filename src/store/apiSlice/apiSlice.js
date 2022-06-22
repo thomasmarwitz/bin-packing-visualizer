@@ -5,15 +5,35 @@ import { setResponseData } from "../packagingSlice/packagingSlice";
 const initialState = {
     requestData: {
         bins: [{
-            id: 300,
+            id: 1,
             x: 500,
             y: 600,
             z: 300,
-            count: 1,
+            count: 10,
             maxWeight: 1000,
             emptyWeight: 1,
-        }],
+        },
+        {
+            id: 2,
+            x: 500,
+            y: 600,
+            z: 300,
+            count: 10,
+            maxWeight: 1000,
+            emptyWeight: 1,
+        }
+    
+        ],
         items: [
+            {
+                id: 2,
+                x: 400,
+                y: 500,
+                z: 200,
+                count: 10,
+                weight: 1,
+            }
+            /*
             {
                 id: 1,
                 x: 50,
@@ -37,10 +57,10 @@ const initialState = {
                 z: 100,
                 count: 100,
                 weight: 1,
-            }
+            }*/
         ],
         algorithm: "LARGEST_AREA_FIT_FIRST",
-        binLimit: 1,
+        binLimit: 10,
     },
     response: {
         data: null,

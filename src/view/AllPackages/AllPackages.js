@@ -19,7 +19,7 @@ export function AllPackages() {
     return (<>
             <Scene 
                 height={600} 
-                width={600} 
+                width={580} 
                 objects={objects} 
                 bin={currentBinDims} 
                 style={{minWidth: "100%", minHeight: "100%"}} 

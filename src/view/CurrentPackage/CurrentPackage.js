@@ -4,7 +4,7 @@ import * as THREE from 'three';
 
 export function CurrentPackage({currentPackage}) {
     return (<>
-            <SceneCurrentPackage height={600} width={600} objects={currentPackage} bin={{x: 10, y: 5, z: 8}}/>
+            <SceneCurrentPackage height={600} width={580} objects={currentPackage} bin={{x: 10, y: 5, z: 8}}/>
         </>
     );
 }
