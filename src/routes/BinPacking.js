@@ -23,7 +23,7 @@ export function BinPacking() {
             >
                 {"<<"}
             </Button>
-            <Typography>{`${currentBinNum} / ${totalBinNum}`}</Typography>
+            <Typography>{`Bin ${currentBinNum} / ${totalBinNum}`}</Typography>
             <Button 
                 variant="contained"
                 disabled={currentBinNum >= totalBinNum}

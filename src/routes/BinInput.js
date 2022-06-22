@@ -18,7 +18,6 @@ export function BinInput() {
         try {
             numeralBinLimit = parseInt(binLimit);
         } catch (e) {
-            console.log(e);
             alert("Bin Limit has to be a number")
             return;
         }
