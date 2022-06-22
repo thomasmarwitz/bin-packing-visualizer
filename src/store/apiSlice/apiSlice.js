@@ -1,5 +1,5 @@
-import { createSlice, createAction } from "@reduxjs/toolkit";
-import { postBinPacking } from "../../client/client";
+import { createSlice, createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { getScannedBox, postBinPacking } from "../../client/client";
 import { setResponseData } from "../packagingSlice/packagingSlice";
 
 const initialState = {
@@ -66,12 +66,22 @@ const initialState = {
         data: null,
         loading: null,
         error: null,
+    },
+    boxResponse: {
+        data: null,
+        loading: null,
+        error: null,
     }
 }
 
 const fetchBinDataPending = createAction("api/fetchBinData/pending");
 const fetchBinDataSuccess = createAction("api/fetchBinData/success");
 const fetchBinDataRejected = createAction("api/fetchBinData/rejected");
+
+export const fetchBoxData  = createAsyncThunk("api/fetchBox", async () => {
+    const response = await getScannedBox();
+    return response.data;
+});
 
 export const fetchBinData = () => {
 
@@ -121,7 +131,19 @@ const apiSlice = createSlice({
             .addCase(fetchBinDataRejected, (state, action) => {
                 state.response.loading = false;
                 state.response.error = action.payload.error;
-            });
+            })
+            .addCase(fetchBoxData.pending, (state, action) => {
+                state.boxResponse.loading= true;
+            })
+            .addCase(fetchBoxData.fulfilled, (state, action) => {
+                state.boxResponse.loading= false;
+                state.boxResponse.data = action.payload;
+                
+            })
+            .addCase(fetchBoxData.rejected, (state, action) => {
+                state.boxResponse.loading= false;
+                state.boxResponse.error = action.error.message;
+            })
     }
 });
 
@@ -139,3 +161,4 @@ export const selectRequestDataBinLimit = state => state.api.requestData.binLimit
 export const selectRequestDataBins = state => state.api.requestData.bins;
 export const selectRequestDataBoxes = state => state.api.requestData.items;
 export const selectResponse = state => state.api.response;
+export const selectBoxResponse = state => state.api.boxResponse;
