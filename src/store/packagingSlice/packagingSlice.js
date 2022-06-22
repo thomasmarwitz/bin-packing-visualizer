@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { generateBox, generatePackagesFromContent } from "../../helper/boxHelper";
+import { generateBox, generatePackagesFromContent, transformPlacement } from "../../helper/boxHelper";
 import { getColor } from "../../helper/colors";
 
 
@@ -139,7 +139,8 @@ export const selectPlacedPackages = state => {
     for (let index = 0; index < maxIndex; ++index) {
         const rawBox = state.packaging.bins[state.packaging.currentBin].packages[index];
         boxes.push(...generateBox(rawBox.dimensions, getColor(rawBox.dimensions), index !== maxIndex - 1));
-        placement.push(rawBox.placement, rawBox.placement);
+        const tPlacement = transformPlacement(rawBox.placement, rawBox.dimensions);
+        placement.push(tPlacement, tPlacement);
     }
     return {
         boxes,
@@ -151,4 +152,6 @@ export const selectAmountPlacedBoxes = state => state.packaging.bins[state.packa
 
 export const selectAmountLeftBoxes = state => state.packaging.bins[state.packaging.currentBin].packages.length - state.packaging.bins[state.packaging.currentBin].bin.filledUntil - 1 - 1;
 
-export const selectCurrentBin = state => state.packaging.currentBin;
+export const selectCurrentBinDimensions = state => state.packaging.bins[state.packaging.currentBin].bin.dimensions;
+
+export const selectCurrentPackageRaw = state => state.packaging.bins[state.packaging.currentBin].packages[state.packaging.bins[state.packaging.currentBin].bin.filledUntil + 1]

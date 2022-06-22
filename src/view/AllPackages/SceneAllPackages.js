@@ -14,7 +14,7 @@ export function Scene(props) {
         if (objects && controls.scene) {
 
             if (controls.scene?.children) {
-                for( var i = controls.scene.children.length - 1; i >= 2; i--) { 
+                for( var i = controls.scene.children.length - 1; i >= 1; i--) { 
                     let obj = controls.scene.children[i];
                     controls.scene.remove(obj);
                 }
@@ -40,7 +40,7 @@ export function Scene(props) {
         let frameId;
     
         const scene = new THREE.Scene({background: 0xffffff})
-        const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000)
+        const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 10000)
         camera.position.set(props.bin.x * 1.25, 0, 0)
         const renderer = new THREE.WebGLRenderer({ antialias: true })
         const geometry = new THREE.BoxGeometry(props.bin.x, props.bin.y, props.bin.z)

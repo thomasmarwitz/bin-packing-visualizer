@@ -1,15 +1,18 @@
 
 import {Scene} from "./SceneAllPackages";
-import * as THREE from 'three';
-import { useState } from "react";
 import { useSelector } from "react-redux";
-import { selectPlacedPackages } from "../../store/packagingSlice/packagingSlice";
+import { selectCurrentBinDimensions, selectPlacedPackages } from "../../store/packagingSlice/packagingSlice";
+import { generateBox } from "../../helper/boxHelper";
 
 export function AllPackages() {
 
+    const currentBinDims = useSelector(selectCurrentBinDimensions);
+    const newBin = generateBox(currentBinDims, 0x000000, true);
     
     const objects = useSelector(selectPlacedPackages);
-    //console.log("placed", objects);
+    objects.boxes.push(...newBin);
+    const origin = {x: 0, y: 0, z: 0};
+    objects.placement.push(origin, origin);
     
 
     return (<>
