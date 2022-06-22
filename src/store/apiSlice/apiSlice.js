@@ -1,5 +1,6 @@
 import { createSlice, createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { getScannedBox, postBinPacking } from "../../client/client";
+import { dimensionEqual } from "../../helper/boxHelper";
 import { setResponseData } from "../packagingSlice/packagingSlice";
 
 const initialState = {
@@ -112,6 +113,24 @@ const apiSlice = createSlice({
         setRequestDataBinLimit(state, action) {
             state.requestData.binLimit = action.payload;
         },
+        addRequestDataBox(state, action) {
+            const box = action.payload;
+            for (let item of state.requestData.items) {
+                if (dimensionEqual(item, box)) {
+                    item.count++;
+                    return;
+                }
+            }
+
+            state.requestData.items.push({
+                id: state.requestData.items.length,
+                x: box.x,
+                y: box.y,
+                z: box.z,
+                count: 1,
+                weight: 1,
+            })
+        },
         setRequestDataBins(state, action) {
             state.requestData.bins = action.payload;
         },
@@ -133,6 +152,7 @@ const apiSlice = createSlice({
                 state.response.error = action.payload.error;
             })
             .addCase(fetchBoxData.pending, (state, action) => {
+                state.boxResponse.data = null;
                 state.boxResponse.loading= true;
             })
             .addCase(fetchBoxData.fulfilled, (state, action) => {
@@ -142,6 +162,7 @@ const apiSlice = createSlice({
             })
             .addCase(fetchBoxData.rejected, (state, action) => {
                 state.boxResponse.loading= false;
+                state.boxResponse.data = null;
                 state.boxResponse.error = action.error.message;
             })
     }
@@ -154,6 +175,7 @@ export const {
     setRequestDataBinLimit,
     setRequestDataBins,
     setRequestDataBoxes,
+    addRequestDataBox,
 } = apiSlice.actions;
 
 export const selectRequestDataAlgorithm = state => state.api.requestData.algorithm;

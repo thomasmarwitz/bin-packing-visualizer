@@ -1,6 +1,7 @@
 import { CircularProgress, Typography } from "@mui/material";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBoxData, selectBoxResponse } from "../store/apiSlice/apiSlice";
+import { fetchBoxData, selectBoxResponse, addRequestDataBox } from "../store/apiSlice/apiSlice";
 
 export function BoxReadingLoading() {
     const response = useSelector(selectBoxResponse);
@@ -22,12 +23,22 @@ export function BoxReadingLoading() {
             <Typography sx={{margin: "1%"}}>Loading Bin Packing</Typography>
         </div>;
     } else if (response.data ) {
-        console.log(response.data);
+        content = <button onClick={() => testReq()}>Simulate req</button>
     } else if (response.error) {
         content = <>{`Error occurred: ${response.error}`}</>;
     } else {
         content = <button onClick={() => testReq()}>Simulate req</button>
     }
+
+    useEffect(() => {
+        if (response.data) {
+            dispatch(addRequestDataBox({
+                x: response.data[0], 
+                y: response.data[2], // this is height
+                z: response.data[1],
+            }))
+        }
+    }, [response.data]);
 
     return content;
 }
