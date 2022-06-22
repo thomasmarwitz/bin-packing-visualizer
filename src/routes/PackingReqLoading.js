@@ -30,41 +30,56 @@ export function PackingReqLoading(props) {
             <CircularProgress size={100}/> 
             <Typography sx={{margin: "1%"}}>Loading Bin Packing</Typography>
         </div>;
-    } else if (response.data && response.data.success) {
-        const enc = btoa(JSON.stringify(response.data));
-        const linkToShare = `${websiteURL}/shared?data=${enc}`;
-    
-        content = <>
-            <div style={{
-                display: "grid",
-                placeItems: "center",
-                margin: "2rem",
-            }}>
-                <div>
-                <TextField
-                    id="outlined-read-only-input"
-                    label="Share Link"
-                    defaultValue={linkToShare}
-                    InputProps={{
-                        readOnly: true,
-                    }}
-                    style={{width: "80vw"}}
-                />
-                    <IconButton color="primary" size="large" onClick={() => navigator.clipboard.writeText(linkToShare)}> 
-                        <ContentCopyIcon fontSize="2.5 rem"/>
-                    </IconButton>
-                </div>
-                <Button variant="outlined" sx={{margin: "1rem"}} onClick={() => navigate("/bin-packing")}>
-                    Open Bin Packing
+    } else if (response.data) {
+        if (!response.data.success) {
+            content = <>
+                <Typography>Couldn't solve bin packing problem</Typography>
+                <Button variant="contained" onClick={() => navigate("/")}>
+                    Back to home
                 </Button>
-                
-            </div>
-        </>
+            </>
+        } else {
+
+            const enc = btoa(JSON.stringify(response.data));
+            const linkToShare = `${websiteURL}/shared?data=${enc}`;
+        
+            content = <>
+                <div style={{
+                    display: "grid",
+                    placeItems: "center",
+                    margin: "2rem",
+                }}>
+                    <div>
+                    <TextField
+                        id="outlined-read-only-input"
+                        label="Share Link"
+                        defaultValue={linkToShare}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                        style={{width: "80vw"}}
+                    />
+                        <IconButton color="primary" size="large" onClick={() => navigator.clipboard.writeText(linkToShare)}> 
+                            <ContentCopyIcon fontSize="2.5 rem"/>
+                        </IconButton>
+                    </div>
+                    <Button variant="outlined" sx={{margin: "1rem"}} onClick={() => navigate("/bin-packing")}>
+                        Open Bin Packing
+                    </Button>
+                    
+                </div>
+            </>
+        }
 
     } else if (response.error) {
         content = <>{`Error occurred: ${response.error}`}</>;
     } else {
-        content = <button onClick={() => testReq()}>Simulate req</button>
+        content = <>
+                <Typography>Invalid State</Typography>
+                <Button variant="contained" onClick={() => navigate("/")}>
+                    Back to home
+                </Button>
+            </>
     }
 
     return content;

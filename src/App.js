@@ -11,8 +11,8 @@ function App() {
             
             <SceneSpinningPackage height={500}/>
             
-            <div style={{display: "grid", placeItems: "center",}}>
-                <Button variant="contained" onClick={() => navigate("/boxes-loading")}>
+            <div style={{display: "grid", placeItems: "center", gridTemplateRows: "repeat(2, fr)", rowGap: "10px"}}>
+                <Button variant="contained" onClick={() => navigate("/bin-input")}>
                     Start Scanning
                 </Button>
                 <br />

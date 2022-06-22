@@ -25,7 +25,7 @@ export function BinInput() {
 
         if (data.length !== 0) {
             dispatch(setRequestDataBins(data));
-            navigate("/box-input");
+            navigate("/boxes-loading");
         } else {
             alert("Please specify atleast 1 valid bin");
         }

@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { fetchBinData, setRequestDataAlgorithm, setRequestDataBinLimit, setRequestDataBins, setRequestDataBoxes } from "../store/apiSlice/apiSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -33,20 +33,25 @@ const exReq1 = {
     binLimit: 1,
 }
 
+
 export function Examples() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    return (<>
-        <Button onClick={() => {
-            dispatch(setRequestDataBins(exReq1.bins));
-            dispatch(setRequestDataBoxes(exReq1.boxes));
-            dispatch(setRequestDataAlgorithm(exReq1.algorithm));
-            dispatch(setRequestDataBinLimit(exReq1.binLimit));
+    const loadEx = (exDat) => {
+            dispatch(setRequestDataBins(exDat.bins));
+            dispatch(setRequestDataBoxes(exDat.boxes));
+            dispatch(setRequestDataAlgorithm(exDat.algorithm));
+            dispatch(setRequestDataBinLimit(exDat.binLimit));
             dispatch(fetchBinData());
             navigate("/packing-loading");
-        }} variant="outlined">Example 1</Button>
-        <br />
-        Example 2
+    }
+
+    return (<>
+        <Typography variant="h2" sx={{textAlign: "center"}}>Bin Packing Examples</Typography>
+        <div style={{display: "grid", placeItems: "center", gridTemplateRows: "repeat(2, fr)", rowGap: "10px", margin: "10px"}}>
+            <Button onClick={() => loadEx(exReq1)} variant="outlined">Example 1</Button>
+            <Button onClick={() => loadEx(exReq1)} variant="outlined" disabled>Example 2</Button>
+        </div>
     </>);
 }

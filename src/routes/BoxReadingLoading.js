@@ -41,13 +41,13 @@ export function BoxReadingLoading() {
         </div>;
     } else if (response.data) {
         console.log(response.data)
-        content = <DynamicFormRedux onSubmit={handleSubmit} />
+        content = <DynamicFormRedux onSubmit={handleSubmit} title={"Input Boxes"}/>
     } else if (response.error) {
         content = <>{`Error occurred: ${response.error}`}</>;
     } else {
         
         
-        content = <DynamicFormRedux onSubmit={handleSubmit}/> //<button onClick={() => testReq()}>Simulate req</button>
+        content = <DynamicFormRedux onSubmit={handleSubmit} title={"Input Boxes"}/> //<button onClick={() => testReq()}>Simulate req</button>
     }
 
     useEffect(() => {
