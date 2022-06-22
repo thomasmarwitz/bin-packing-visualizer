@@ -14,10 +14,17 @@ export function AllPackages() {
     const origin = {x: 0, y: 0, z: 0};
     
     objects.placement.push(transformPlacement(origin, currentBinDims), transformPlacement(origin, currentBinDims));
-    
+    //objects.placement = objects.placement.map(); // transform back
 
     return (<>
-            <Scene height={600} width={600} objects={objects} bin={{x: 10, y: 5, z: 8}} style={{minWidth: "100%", minHeight: "100%"}}/>
+            <Scene 
+                height={600} 
+                width={600} 
+                objects={objects} 
+                bin={currentBinDims} 
+                style={{minWidth: "100%", minHeight: "100%"}} 
+                camera={{x: currentBinDims.x * 1.25, y: 0, z: currentBinDims.z * 0.5}}
+            />
         </>
     );
 }

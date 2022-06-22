@@ -10,11 +10,11 @@ export function Scene(props) {
     const [isAnimating, setAnimating] = useState(true)
     const controls = useRef(null)
     
-    const handleProps = (objects) => {
+    const handleProps = ({objects, camera}) => {
         if (objects && controls.scene) {
 
             if (controls.scene?.children) {
-                for( var i = controls.scene.children.length - 1; i >= 1; i--) { 
+                for( var i = controls.scene.children.length - 1; i >= 0; i--) { // delete coord axes
                     let obj = controls.scene.children[i];
                     controls.scene.remove(obj);
                 }
@@ -32,6 +32,12 @@ export function Scene(props) {
                 );
             }
         }
+
+        /*
+        if (camera && controls.scene) {
+            controls.camera.position.set();
+        }
+        */
     }
 
     useEffect(() => {
@@ -41,7 +47,7 @@ export function Scene(props) {
     
         const scene = new THREE.Scene({background: 0xffffff})
         const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 10000)
-        camera.position.set(props.bin.x * 1.25, 0, 0)
+        camera.position.set(props.camera.x, props.camera.y, props.camera.z)
         const renderer = new THREE.WebGLRenderer({ antialias: true })
         const geometry = new THREE.BoxGeometry(props.bin.x, props.bin.y, props.bin.z)
         const material = new THREE.MeshBasicMaterial({ color: 0x000000, opacity: 0, transparent: true })
@@ -107,8 +113,9 @@ export function Scene(props) {
         controls.current = { start, stop }
         controls.control = new OrbitControls( camera, renderer.domElement );
         controls.scene = scene;
+        controls.camera = camera;
         
-        handleProps(props.objects);
+        handleProps({objects: props.objects, camera: props.camera});
 
         return () => {
             stop()
@@ -125,7 +132,7 @@ export function Scene(props) {
     }
     }, [isAnimating])
 
-    handleProps(props.objects);
+    handleProps({objects: props.objects, camera: props.camera});
        
     return <div className="vis" ref={mount} />
 }
