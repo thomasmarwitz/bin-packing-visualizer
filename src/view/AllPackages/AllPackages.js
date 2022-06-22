@@ -2,7 +2,7 @@
 import {Scene} from "./SceneAllPackages";
 import { useSelector } from "react-redux";
 import { selectCurrentBinDimensions, selectPlacedPackages } from "../../store/packagingSlice/packagingSlice";
-import { generateBox } from "../../helper/boxHelper";
+import { generateBox, transformPlacement } from "../../helper/boxHelper";
 
 export function AllPackages() {
 
@@ -12,7 +12,8 @@ export function AllPackages() {
     const objects = useSelector(selectPlacedPackages);
     objects.boxes.push(...newBin);
     const origin = {x: 0, y: 0, z: 0};
-    objects.placement.push(origin, origin);
+    
+    objects.placement.push(transformPlacement(origin, currentBinDims), transformPlacement(origin, currentBinDims));
     
 
     return (<>

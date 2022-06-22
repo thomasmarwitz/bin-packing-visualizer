@@ -4,42 +4,42 @@ import { getColor } from "../../helper/colors";
 
 
 const packages = [
-{
-    dimensions: {
-        x: 1, 
-        y: 1,
-        z: 1,
+    {
+        dimensions: {
+            x: 1, 
+            y: 1,
+            z: 1,
+        },
+        placement: {
+            x: 0, 
+            y: 0,
+            z: 0,
+        },
     },
-    placement: {
-        x: 0, 
-        y: 0,
-        z: 0,
+    {
+        dimensions: {
+            x: 1, 
+            y: 2,
+            z: 1,
+        },
+        placement: {
+            x: 1, 
+            y: 1,
+            z: 1,
+        },
     },
-},
-{
-    dimensions: {
-        x: 1, 
-        y: 2,
-        z: 1,
+    {
+        dimensions: {
+            x: 1, 
+            y: 1,
+            z: 2,
+        },
+        placement: {
+            x: 2, 
+            y: 2,
+            z: 2,
+        },
     },
-    placement: {
-        x: 1, 
-        y: 1,
-        z: 1,
-    },
-},
-{
-    dimensions: {
-        x: 1, 
-        y: 1,
-        z: 2,
-    },
-    placement: {
-        x: 2, 
-        y: 2,
-        z: 2,
-    },
-},
 ]
 
 const initialState = {
