@@ -26,6 +26,10 @@ export function SceneCurrentPackage(props) {
                 obj.position.set(0, 0, 0);
             }
         }
+
+        if (props.camera && controls?.camera) {
+            controls.camera.position.set(props.camera.x, props.camera.y, props.camera.z);
+        }
     }
     
     useEffect(() => {
@@ -81,6 +85,7 @@ export function SceneCurrentPackage(props) {
         controls.current = { start, stop }
         controls.control = new OrbitControls( camera, renderer.domElement );
         controls.scene = scene;
+        controls.camera = camera;
 
         // handle props
         handleProps(props);
