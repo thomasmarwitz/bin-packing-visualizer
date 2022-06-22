@@ -22,7 +22,6 @@ export function Scene(props) {
 
             for (let index = 0; index < objects.boxes.length; ++index) {
                 const box = objects.boxes[index];
-                //console.log("box", box)
                 const placement = objects.placement[index]
                 controls.scene.add(box);
                 box.position.set(

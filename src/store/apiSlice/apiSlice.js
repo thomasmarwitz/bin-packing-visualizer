@@ -1,4 +1,4 @@
-import { createSlice, createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAction } from "@reduxjs/toolkit";
 import { getScannedBox, postBinPacking } from "../../client/client";
 import { dimensionEqual } from "../../helper/boxHelper";
 import { setCurrentBin, setResponseData } from "../packagingSlice/packagingSlice";
@@ -55,10 +55,33 @@ const fetchBinDataPending = createAction("api/fetchBinData/pending");
 const fetchBinDataSuccess = createAction("api/fetchBinData/success");
 const fetchBinDataRejected = createAction("api/fetchBinData/rejected");
 
-export const fetchBoxData  = createAsyncThunk("api/fetchBox", async () => {
-    const response = await getScannedBox();
-    return response.data;
-});
+const fetchBoxDataPending = createAction("api/fetchBoxData/pending");
+const fetchBoxDataSuccess = createAction("api/fetchBoxData/success");
+const fetchBoxDataRejected = createAction("api/fetchBoxData/rejected");
+
+
+export const fetchBoxData = () => {
+
+    return (dispatch) => {
+        
+        dispatch(fetchBoxDataPending());
+
+        return getScannedBox().then(
+            response => {
+                dispatch(fetchBoxDataSuccess({data: response.data}));
+                dispatch(addRequestDataBox({
+                    x: response.data[0], 
+                    y: response.data[2], // this is height
+                    z: response.data[1],
+                })); // already add box, once its fetched
+                
+            },
+            error => dispatch(fetchBoxDataRejected({error: error.message})),
+        );
+
+    }
+
+}
 
 export const fetchBinData = () => {
 
@@ -162,16 +185,15 @@ const apiSlice = createSlice({
                 state.response.loading = false;
                 state.response.error = action.payload.error;
             })
-            .addCase(fetchBoxData.pending, (state, action) => {
+            .addCase(fetchBoxDataPending, (state, action) => {
                 state.boxResponse.data = null;
                 state.boxResponse.loading= true;
             })
-            .addCase(fetchBoxData.fulfilled, (state, action) => {
-                state.boxResponse.loading= false;
+            .addCase(fetchBoxDataSuccess, (state, action) => {
+                state.boxResponse.loading = false;
                 state.boxResponse.data = action.payload;
-                
             })
-            .addCase(fetchBoxData.rejected, (state, action) => {
+            .addCase(fetchBoxDataRejected, (state, action) => {
                 state.boxResponse.loading= false;
                 state.boxResponse.data = null;
                 state.boxResponse.error = action.error.message;

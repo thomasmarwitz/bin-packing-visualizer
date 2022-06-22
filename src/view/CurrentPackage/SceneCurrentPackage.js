@@ -16,7 +16,6 @@ export function SceneCurrentPackage(props) {
             if (controls.scene?.children) {
                 for( var i = controls.scene.children.length - 1; i >= 0; i--) { 
                     let obj = controls.scene.children[i];
-                    //console.log(obj);
                     controls.scene.remove(obj);
                 }
             }

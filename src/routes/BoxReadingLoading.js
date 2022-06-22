@@ -1,5 +1,5 @@
 import { CircularProgress, Typography } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchBoxData, selectBoxResponse, addRequestDataBox, selectRequestDataBoxes, fetchBinData } from "../store/apiSlice/apiSlice";
@@ -9,7 +9,7 @@ const dimValid = (dim) => {
     return (dim.x && dim.y && dim.z);
 }
 
-export function BoxReadingLoading() {
+function BoxReadingLoading() {
     const response = useSelector(selectBoxResponse);
     const items = useSelector(selectRequestDataBoxes);
     const dispatch = useDispatch();
@@ -24,7 +24,7 @@ export function BoxReadingLoading() {
             alert("Please fill in the missing gaps")
         } else {
             dispatch(fetchBinData());
-            navigate("/packing-loading")
+            navigate("/packing-loading");
         }
     }
 
@@ -40,7 +40,6 @@ export function BoxReadingLoading() {
             <Typography sx={{margin: "1%"}}>Scanning Box</Typography>
         </div>;
     } else if (response.data) {
-        console.log(response.data)
         content = <DynamicFormRedux onSubmit={handleSubmit} title={"Input Boxes"}/>
     } else if (response.error) {
         content = <>{`Error occurred: ${response.error}`}</>;
@@ -50,15 +49,7 @@ export function BoxReadingLoading() {
         content = <DynamicFormRedux onSubmit={handleSubmit} title={"Specify Boxes"}/> //<button onClick={() => testReq()}>Simulate req</button>
     }
 
-    useEffect(() => {
-        if (response.data) {
-            dispatch(addRequestDataBox({
-                x: response.data[0], 
-                y: response.data[2], // this is height
-                z: response.data[1],
-            }))
-        }
-    }, [response.data]);
-
     return content;
 }
+
+export default memo(BoxReadingLoading, () => true);

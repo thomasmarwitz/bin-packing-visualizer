@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { BinPacking } from './routes/BinPacking';
 import { BinInput } from './routes/BinInput';
 import { PackingReqLoading } from './routes/PackingReqLoading';
-import { BoxReadingLoading } from './routes/BoxReadingLoading';
+import  BoxReadingLoading from './routes/BoxReadingLoading';
 import { SharedData } from './routes/SharedData';
 import { Examples } from './routes/Examples';
 

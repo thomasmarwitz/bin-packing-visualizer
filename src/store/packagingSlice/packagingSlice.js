@@ -125,7 +125,6 @@ export const selectHasNext = state => state.packaging.bins[state.packaging.curre
 export const selectHasPrev = state => state.packaging.bins[state.packaging.currentBin].bin.filledUntil >= 0;
 
 export const selectCurrentPackage = state => {
-    console.log(state.packaging.currentBin)
     const box = state.packaging.bins[state.packaging.currentBin].packages[state.packaging.bins[state.packaging.currentBin].bin.filledUntil + 1];
     return generateBox(box.dimensions, getColor(box.dimensions), false);
 };
