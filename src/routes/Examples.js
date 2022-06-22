@@ -6,12 +6,12 @@ import { useNavigate } from "react-router-dom";
 const exReq1 = {
     bins: [{
         id: 1,
-            x: 215,
-            y: 70,
-            z: 166,
-            count: 1,
-            maxWeight: 1000,
-            emptyWeight: 0,
+        x: 215,
+        y: 70,
+        z: 166,
+        count: 1,
+        maxWeight: 1000,
+        emptyWeight: 1,
     }],
     boxes: [{
         id: 1,

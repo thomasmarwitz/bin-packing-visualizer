@@ -50,6 +50,7 @@ export function PackingReqLoading(props) {
                     margin: "2rem",
                 }}>
                     <div>
+                    <Typography variant="h4" sx={{marginBottom: "10px"}}>Share with your coworker</Typography>
                     <TextField
                         id="outlined-read-only-input"
                         label="Share Link"
@@ -63,9 +64,11 @@ export function PackingReqLoading(props) {
                             <ContentCopyIcon fontSize="2.5 rem"/>
                         </IconButton>
                     </div>
-                    <Button variant="outlined" sx={{margin: "1rem"}} onClick={() => navigate("/bin-packing")}>
-                        Open Bin Packing
-                    </Button>
+                    <div>
+                        <Button variant="outlined" sx={{margin: "1rem"}} onClick={() => navigate("/bin-packing")}>
+                            Open Bin Packing
+                        </Button>
+                    </div>
                     
                 </div>
             </>

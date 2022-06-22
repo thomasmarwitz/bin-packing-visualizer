@@ -10,62 +10,34 @@ const findById = (arr, id) => {
 const initialState = {
     requestData: {
         bins: [{
-            id: 1,
-            x: 500,
-            y: 600,
-            z: 300,
-            count: 10,
+            id: 0,
+            x: 215,
+            y: 70,
+            z: 166,
+            count: 1,
             maxWeight: 1000,
             emptyWeight: 1,
-        },
-        {
-            id: 2,
-            x: 500,
-            y: 600,
-            z: 300,
-            count: 10,
-            maxWeight: 1000,
-            emptyWeight: 1,
-        }
-    
-        ],
+        }],
         items: [
             {
                 id: 0,
-                x: 400,
-                y: 500,
-                z: 200,
-                count: 10,
+                x: 144,
+                y: 53,
+                z: 115,
+                count: 1,
                 weight: 1,
-            }
-            /*
+            },
             {
                 id: 1,
-                x: 50,
-                y: 30,
-                z: 70,
-                count: 100,
+                x: 142,
+                y: 51,
+                z: 92,
+                count: 1,
                 weight: 1,
-            },
-            {
-                id: 2,
-                x: 50,
-                y: 60,
-                z: 10,
-                count: 100,
-                weight: 1,
-            },
-            {
-                id: 3,
-                x: 10,
-                y: 70,
-                z: 100,
-                count: 100,
-                weight: 1,
-            }*/
+            }
         ],
         algorithm: "LARGEST_AREA_FIT_FIRST",
-        binLimit: 10,
+        binLimit: 1,
     },
     response: {
         data: null,
@@ -136,6 +108,23 @@ const apiSlice = createSlice({
                 weight: 1,
             })
         },
+        addEmptyRequestDataBin(state, action) {
+
+            state.requestData.bins.push({
+                id: state.requestData.bins.length,
+                x: "",
+                y: "",
+                z: "",
+                count: 1,
+                weight: 1,
+            });
+        },
+        deleteLastRequestBin(state, action) {
+            state.requestData.bins.pop();
+        },
+        deleteLastRequestBox(state, action) {
+            state.requestData.items.pop();
+        },
         setRequestDataBins(state, action) {
             state.requestData.bins = action.payload;
         },
@@ -144,8 +133,15 @@ const apiSlice = createSlice({
             const item = findById(state.requestData.items, id);
             const parse = parseInt(val)
             item[key] = isNaN(parse) ? 0 : parse;
-
         },
+        
+        setRequestDataBinAttr(state, action) {
+            const {id, key, val} = action.payload;
+            const item = findById(state.requestData.bins, id);
+            const parse = parseInt(val)
+            item[key] = isNaN(parse) ? 0 : parse;
+        },
+
         setRequestDataBoxes(state, action) {
             state.requestData.items = action.payload;
         },
@@ -192,6 +188,10 @@ export const {
     setRequestDataBoxes,
     addRequestDataBox,
     setRequestDataBoxAttr,
+    setRequestDataBinAttr,
+    addEmptyRequestDataBin,
+    deleteLastRequestBin,
+    deleteLastRequestBox,
     resetBoxes
 } = apiSlice.actions;
 

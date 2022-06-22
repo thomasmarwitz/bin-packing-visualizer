@@ -1,7 +1,7 @@
 import { TextField, Button, Typography, Box } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addRequestDataBox, fetchBoxData, selectRequestDataBoxes, setRequestDataBoxAttr } from "../../store/apiSlice/apiSlice";
+import { addRequestDataBox, deleteLastRequestBox, fetchBoxData, selectRequestDataBoxes, setRequestDataBoxAttr } from "../../store/apiSlice/apiSlice";
 
 const findById = (arr, id) => {
     return arr.filter(el => el.id === id)[0];
@@ -24,6 +24,10 @@ export function DynamicFormRedux(props) {
         dispatch(addRequestDataBox({}));
     }
 
+    const deleteLastRow = () => {
+        dispatch(deleteLastRequestBox());
+    }
+
     return (<>
             <Typography sx={{fontSize: "2rem", fontWeight: "700"}}>{props.title}</Typography>
             <Box
@@ -36,32 +40,47 @@ export function DynamicFormRedux(props) {
 
 
 
-            <Button 
-                variant="contained" 
-                onClick={() => dispatch(fetchBoxData())}
-                sx={{marginTop: `10px`, marginRight: "1%"}}
-                >
-                Scan Next Box
-            </Button> 
-            
+            <div style={{display: 'grid', gridTemplateColumns: '15% 15% 3% 14% 34% 14%', columnGap: "1%"}}>
+                <Button 
+                    variant="contained" 
+                    onClick={deleteLastRow}
+                    sx={{marginTop: `10px`, marginRight: "1%"}}
+                    color="error"
+                    disabled={formState.length === 0}
+                    >
+                    Delete Last Box Type
+                </Button>
 
-            <Button 
-                variant="contained" 
-                onClick={handleAddRow}
-                sx={{marginTop: `10px`, marginRight: "1%"}}
-                >
-                Add Box Type
-            </Button> 
-
-            <Button 
+                <Button 
+                    variant="contained" 
+                    onClick={handleAddRow}
+                    sx={{marginTop: `10px`, marginRight: "1%"}}
+                    >
+                    Add Box Type
+                </Button> 
                 
-                variant="contained" 
-                onClick={props.onSubmit}
-                sx={{marginTop: `10px`, type: "submit"}}
-                color="success"
-                >
-                Submit
-            </Button> 
+                <div></div>
+                
+                <Button 
+                    variant="contained" 
+                    onClick={() => dispatch(fetchBoxData())}
+                    sx={{marginTop: `10px`, marginRight: "1%"}}
+                    >
+                    Scan Next Box
+                </Button> 
+
+                <div></div>
+
+                <Button 
+                    
+                    variant="contained" 
+                    onClick={props.onSubmit}
+                    sx={{marginTop: `10px`, type: "submit"}}
+                    color="success"
+                    >
+                    Submit
+                </Button> 
+            </div>
         </>
     )
 }

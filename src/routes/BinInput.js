@@ -4,16 +4,16 @@ import { DynamicForm } from "../view/DynamicForm/DynamicForm";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { resetBoxes, selectRequestDataAlgorithm, selectRequestDataBinLimit, selectRequestDataBins, setRequestDataAlgorithm, setRequestDataBinLimit, setRequestDataBins } from "../store/apiSlice/apiSlice";
+import { DynamicFormReduxBins } from "../view/DynamicForm/DynamicFormReduxBins";
 
 export function BinInput() {
     const algorithm = useSelector(selectRequestDataAlgorithm);
     const binLimit = useSelector(selectRequestDataBinLimit);
-    const bins = useSelector(selectRequestDataBins);
     
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const handleSubmittedData = (data) => {
+    const onSubmit = () => {
         let numeralBinLimit;
         try {
             numeralBinLimit = parseInt(binLimit);
@@ -23,13 +23,8 @@ export function BinInput() {
         }
         dispatch(setRequestDataBinLimit(numeralBinLimit));
 
-        if (data.length !== 0) {
-            dispatch(setRequestDataBins(data));
-            dispatch(resetBoxes());
-            navigate("/boxes-loading");
-        } else {
-            alert("Please specify atleast 1 valid bin");
-        }
+        //dispatch(resetBoxes());
+        navigate("/boxes-loading");
     }
 
     return (<>
@@ -52,6 +47,6 @@ export function BinInput() {
             <Input value={binLimit} onChange={(event) => dispatch(setRequestDataBinLimit(event.target.value))}/>
         </>
         
-        <DynamicForm title={"Input Bins"} handleSubmittedData={handleSubmittedData} initialState={[]}/>
+        <DynamicFormReduxBins title={"Specify Bins"} onSubmit={onSubmit}/>
     </>);
 }

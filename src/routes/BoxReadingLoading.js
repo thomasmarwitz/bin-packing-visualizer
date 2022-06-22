@@ -47,7 +47,7 @@ export function BoxReadingLoading() {
     } else {
         
         
-        content = <DynamicFormRedux onSubmit={handleSubmit} title={"Input Boxes"}/> //<button onClick={() => testReq()}>Simulate req</button>
+        content = <DynamicFormRedux onSubmit={handleSubmit} title={"Specify Boxes"}/> //<button onClick={() => testReq()}>Simulate req</button>
     }
 
     useEffect(() => {
