@@ -1,14 +1,14 @@
 import { Button, Box, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { Item } from "../../helper/styleHelper";
-import { selectAmountLeftBoxes, selectAmountPlacedBoxes, selectCurrentPackage, selectCurrentPackageRaw, selectHasNext, selectHasPrev, setNext, setPrev } from "../../store/packagingSlice/packagingSlice";
+import { selectAmountLeftBoxes, selectAmountPlacedBoxes, selectCurrentBinDimensions, selectCurrentPackage, selectCurrentPackageRaw, selectHasNext, selectHasPrev, setNext, setPrev } from "../../store/packagingSlice/packagingSlice";
 
 export function Controls() {
 
     const dispatch = useDispatch();
 
     const packageRaw = useSelector(selectCurrentPackageRaw);
-    
+    const binDims = useSelector(selectCurrentBinDimensions)
     const hasNext = useSelector(selectHasNext);
     const hasPrev = useSelector(selectHasPrev);
     const amountLeft = useSelector(selectAmountLeftBoxes);
@@ -50,12 +50,12 @@ export function Controls() {
             <Item>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
 
-                    <Typography>x: {packageRaw.dimensions.x}</Typography>
-                    <Typography>Placement x: {packageRaw.placement.x}</Typography>
-                    <Typography>y: {packageRaw.dimensions.y}</Typography>
-                    <Typography>Placement y: {packageRaw.placement.y}</Typography>
-                    <Typography>z: {packageRaw.dimensions.z}</Typography>
-                    <Typography>Placement z: {packageRaw.placement.z}</Typography>
+                    <Typography>Package x: {packageRaw.dimensions.x}</Typography>
+                    <Typography>Bin x: {binDims.x}</Typography>
+                    <Typography>Package y: {packageRaw.dimensions.y}</Typography>
+                    <Typography>Bin y: {binDims.y}</Typography>
+                    <Typography>Packge z: {packageRaw.dimensions.z}</Typography>
+                    <Typography>Bin z: {binDims.z}</Typography>
 
                 </div>
             </Item>

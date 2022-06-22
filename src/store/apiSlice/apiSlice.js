@@ -149,6 +149,9 @@ const apiSlice = createSlice({
         setRequestDataBoxes(state, action) {
             state.requestData.items = action.payload;
         },
+        resetBoxes(state, action) {
+            state.requestData.items = [];
+        }
     },
     extraReducers(builder) {
         builder
@@ -189,6 +192,7 @@ export const {
     setRequestDataBoxes,
     addRequestDataBox,
     setRequestDataBoxAttr,
+    resetBoxes
 } = apiSlice.actions;
 
 export const selectRequestDataAlgorithm = state => state.api.requestData.algorithm;

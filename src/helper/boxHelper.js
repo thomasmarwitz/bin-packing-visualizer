@@ -26,9 +26,9 @@ export function generatePackagesFromContent(content) {
     for (let _package of content) {
         const _p = {
             dimensions: {
-                x: _package.xEnd - _package.x, 
-                y: _package.yEnd - _package.y,
-                z: _package.zEnd - _package.z,
+                x: _package.xEnd + 1 - _package.x, 
+                y: _package.yEnd + 1 - _package.y,
+                z: _package.zEnd + 1 - _package.z,
             },
             placement: {
                 x: _package.x, 

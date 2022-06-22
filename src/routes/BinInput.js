@@ -3,7 +3,7 @@ import React from "react";
 import { DynamicForm } from "../view/DynamicForm/DynamicForm";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectRequestDataAlgorithm, selectRequestDataBinLimit, selectRequestDataBins, setRequestDataAlgorithm, setRequestDataBinLimit, setRequestDataBins } from "../store/apiSlice/apiSlice";
+import { resetBoxes, selectRequestDataAlgorithm, selectRequestDataBinLimit, selectRequestDataBins, setRequestDataAlgorithm, setRequestDataBinLimit, setRequestDataBins } from "../store/apiSlice/apiSlice";
 
 export function BinInput() {
     const algorithm = useSelector(selectRequestDataAlgorithm);
@@ -25,6 +25,7 @@ export function BinInput() {
 
         if (data.length !== 0) {
             dispatch(setRequestDataBins(data));
+            dispatch(resetBoxes());
             navigate("/boxes-loading");
         } else {
             alert("Please specify atleast 1 valid bin");
