@@ -1,7 +1,11 @@
 import { createSlice, createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { getScannedBox, postBinPacking } from "../../client/client";
 import { dimensionEqual } from "../../helper/boxHelper";
-import { setResponseData } from "../packagingSlice/packagingSlice";
+import { setCurrentBin, setResponseData } from "../packagingSlice/packagingSlice";
+
+const findById = (arr, id) => {
+    return arr.filter(el => el.id === id)[0];
+}
 
 const initialState = {
     requestData: {
@@ -27,7 +31,7 @@ const initialState = {
         ],
         items: [
             {
-                id: 2,
+                id: 0,
                 x: 400,
                 y: 500,
                 z: 200,
@@ -90,6 +94,7 @@ export const fetchBinData = () => {
         const requestData = getState().api.requestData;
         
         dispatch(fetchBinDataPending());
+        dispatch(setCurrentBin({currentBin: 0}));
 
         return postBinPacking(requestData).then(
             response => {
@@ -134,6 +139,13 @@ const apiSlice = createSlice({
         setRequestDataBins(state, action) {
             state.requestData.bins = action.payload;
         },
+        setRequestDataBoxAttr(state, action) {
+            const {id, key, val} = action.payload;
+            const item = findById(state.requestData.items, id);
+            const parse = parseInt(val)
+            item[key] = isNaN(parse) ? 0 : parse;
+
+        },
         setRequestDataBoxes(state, action) {
             state.requestData.items = action.payload;
         },
@@ -176,6 +188,7 @@ export const {
     setRequestDataBins,
     setRequestDataBoxes,
     addRequestDataBox,
+    setRequestDataBoxAttr,
 } = apiSlice.actions;
 
 export const selectRequestDataAlgorithm = state => state.api.requestData.algorithm;
@@ -184,3 +197,4 @@ export const selectRequestDataBins = state => state.api.requestData.bins;
 export const selectRequestDataBoxes = state => state.api.requestData.items;
 export const selectResponse = state => state.api.response;
 export const selectBoxResponse = state => state.api.boxResponse;
+export const selectRequestDataBoxById = (state, id) => state.api.requestData.items[id];
