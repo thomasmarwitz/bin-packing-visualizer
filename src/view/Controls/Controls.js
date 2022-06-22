@@ -21,41 +21,31 @@ export function Controls() {
     const handlePrev = () => {
         dispatch(setPrev());
     }
-    
-    /*
-    readd:
-    <Typography>Filled Space: {filledSpace}</Typography>
-                    <Typography>x: {filledSpace}</Typography>
-                    <Typography>Placed Boxes: {amountPlaced}</Typography>
-                    <Typography>y: {filledSpace}</Typography>
-                    <Typography>Available Space: {availableSpace}</Typography>
-                    <Typography>z: {filledSpace}</Typography>
-                    <Typography>Left Boxes: {amountLeft}</Typography>
-
-    */
-
-    let filledSpace = 14;
-    let availableSpace = 20;
 
     return (
         <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
             <Item>
-                <Button 
-                    variant="contained" 
-                    onClick={() => handlePrev()}
-                    sx={{margin: 1}}
-                    disabled={!hasPrev}
-                    >
-                    Previous Step
-                </Button> 
-                <Button 
-                    variant="contained" 
-                    onClick={() => handleNext()}
-                    sx={{margin: 1}}
-                    disabled={!hasNext}
-                    >
-                    Next Step
-                </Button>   
+                <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)'}}>
+                    <Button 
+                        variant="contained" 
+                        onClick={() => handlePrev()}
+                        sx={{margin: 1}}
+                        disabled={!hasPrev}
+                        >
+                        Previous Step
+                    </Button> 
+                    <div style={{display: "flex", justifyContent: "center", alignItems: "center",}}>
+                        <Typography>{`${amountPlaced} / ${amountPlaced + amountLeft}`}</Typography>
+                    </div>
+                    <Button 
+                        variant="contained" 
+                        onClick={() => handleNext()}
+                        sx={{margin: 1}}
+                        disabled={!hasNext}
+                        >
+                        Next Step
+                    </Button>   
+                </div>
             </Item>
             <Item>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
