@@ -29,7 +29,7 @@ export function SceneCurrentPackage(props) {
     }
     
     useEffect(() => {
-        let width = mount.current.clientWidth;
+        let width = mount.current.clientWidth - 15;
         let height = mount.current.clientHeight || props.height;
         let frameId;
     
