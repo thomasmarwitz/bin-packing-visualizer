@@ -20,16 +20,23 @@ function dimensionEqual(dim1, dim2) {
 
 const dimensions = []
 
+function eqSet(as, bs) {
+    if (as.size !== bs.size) return false;
+    for (var a of as) if (!bs.has(a)) return false;
+    return true;
+}
+
 function indexOfDim(dim) {
     let pos = -1;
     for (let index in dimensions) {
-        if (dimensionEqual(dim, dimensions[index])) pos = index;
+        if (eqSet(dim, dimensions[index])) pos = index;
     }
     return pos;
 
 }
 
 export function getColor(dim) {
+    dim = new Set([dim.x, dim.y, dim.z]);
     let pos = indexOfDim(dim);
     if (pos === -1) {
         dimensions.push(dim);

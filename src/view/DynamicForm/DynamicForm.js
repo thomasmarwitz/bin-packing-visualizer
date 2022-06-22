@@ -50,7 +50,7 @@ export function DynamicForm(props) {
             <Typography sx={{fontSize: "2rem", fontWeight: "700"}}>{props.title}</Typography>
             <Box
                 component="form"
-                style={{display: "grid", gridTemplateColumns: "repeat(5, 1fr)", columnGap: "1%", rowGap: "5%"}}
+                style={{display: "grid", gridTemplateColumns: "repeat(5, 1fr)", columnGap: "1%", rowGap: "10px"}}
             >
                 {formState}
                 
@@ -59,7 +59,7 @@ export function DynamicForm(props) {
             <Button 
                 variant="contained" 
                 onClick={handleAddRow}
-                sx={{marginTop: `${formState.length / 5 * 1.2}%`, marginRight: "1%"}}
+                sx={{marginTop: `10px`, marginRight: "1%"}}
                 >
                 Add Box Type
             </Button> 
@@ -68,7 +68,7 @@ export function DynamicForm(props) {
                 
                 variant="contained" 
                 onClick={handleSubmit}
-                sx={{marginTop: `${formState.length / 5 * 1.2}%`, type: "submit"}}
+                sx={{marginTop: `10px`, type: "submit"}}
                 color="success"
                 >
                 Submit
