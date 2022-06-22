@@ -33,8 +33,13 @@ export function PackingReqLoading(props) {
     } else if (response.data) {
         if (!response.data.success) {
             content = <>
-                <Typography>Couldn't solve bin packing problem</Typography>
-                <Button variant="contained" onClick={() => navigate("/")}>
+                <Typography sx={{margin: 3}}>Couldn't solve bin packing problem</Typography>
+                
+                <Button variant="contained" onClick={() => navigate("/bin-input")} sx={{margin: 3}}>
+                    Back to input
+                </Button>
+                
+                <Button variant="contained" onClick={() => navigate("/")} sx={{margin: 3}}>
                     Back to home
                 </Button>
             </>
@@ -63,12 +68,13 @@ export function PackingReqLoading(props) {
                         <IconButton color="primary" size="large" onClick={() => navigator.clipboard.writeText(linkToShare)}> 
                             <ContentCopyIcon fontSize="2.5 rem"/>
                         </IconButton>
-                    </div>
-                    <div>
-                        <Button variant="outlined" sx={{margin: "1rem"}} onClick={() => navigate("/bin-packing")}>
-                            Open Bin Packing
-                        </Button>
-                    </div>
+                    </div> 
+
+                    <Typography variant="h4" sx={{marginTop: "20px"}}>Open yourself</Typography>
+                    <Button variant="outlined" sx={{margin: "1rem"}} onClick={() => navigate("/bin-packing")}>
+                        Open Bin Packing
+                    </Button>
+                
                     
                 </div>
             </>

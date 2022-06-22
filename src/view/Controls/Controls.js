@@ -54,7 +54,7 @@ export function Controls() {
                     <Typography>Bin x: {binDims.x}</Typography>
                     <Typography>Package y: {packageRaw.dimensions.y}</Typography>
                     <Typography>Bin y: {binDims.y}</Typography>
-                    <Typography>Packge z: {packageRaw.dimensions.z}</Typography>
+                    <Typography>Package z: {packageRaw.dimensions.z}</Typography>
                     <Typography>Bin z: {binDims.z}</Typography>
 
                 </div>
